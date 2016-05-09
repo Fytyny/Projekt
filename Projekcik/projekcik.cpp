@@ -8,5 +8,5 @@ Projekcik::Projekcik(QWidget *parent)
 
 Projekcik::~Projekcik()
 {
-
+	
 }

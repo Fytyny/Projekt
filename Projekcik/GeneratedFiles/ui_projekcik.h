@@ -69,6 +69,7 @@ public:
         ProjekcikClass->setStatusBar(statusBar);
 
         retranslateUi(ProjekcikClass);
+        QObject::connect(pushButton, SIGNAL(clicked()), ProjekcikClass, SLOT(close()));
 
         QMetaObject::connectSlotsByName(ProjekcikClass);
     } // setupUi
