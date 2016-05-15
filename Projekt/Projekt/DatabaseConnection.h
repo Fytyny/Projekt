@@ -3,9 +3,12 @@
 class DatabaseConnection
 {
 	sqlite3 *db;
+	int execute(char*);
 public:
 	DatabaseConnection();
 	~DatabaseConnection();
 	int connect();
+	int disconnect();
+	int createTAB();
 };
 

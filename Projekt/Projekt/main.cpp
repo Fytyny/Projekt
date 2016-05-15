@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QDate>
 #include <cmath>
+#include <string>
 using namespace std;
 
 QDebug operator<< (QDebug d, const Zwnswn &c) {
@@ -16,17 +17,21 @@ int main(int argc, char *argv[])
 {
 	DatabaseConnection base;
 	int check = base.connect();
-	if (check) 
+	if (check != SQLITE_OK)  
 	{
 		qDebug() << "Can't open database";
-		return 0;
-		//exit(0);sad
+		exit(0);
 
 	}
 	else
 	{
-		qDebug() << "Database openeed successfully";
+		qDebug() << "Database openeed successfully ";
 	}
+	base.createTAB();
+	
+	
+
+	/*
 	QApplication a(argc, argv);
 	Projekt w;
 
@@ -35,6 +40,9 @@ int main(int argc, char *argv[])
 	Zwnswn jot;
 	jot << qDebug();
 	qDebug() << "jot" << jot;
+
 	return a.exec(); 
+	*/
+	return 0;
 }
 
