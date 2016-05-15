@@ -28,7 +28,11 @@ int main(int argc, char *argv[])
 		qDebug() << "Database openeed successfully ";
 	}
 	base.createTAB();
-	
+	string imie = "imie";
+	string nazwisko = "nazwwisko";
+	string result = " " + imie + " " + nazwisko;
+	char *c = const_cast<char*>(result.c_str());
+	qDebug() << c;
 	
 
 	/*
