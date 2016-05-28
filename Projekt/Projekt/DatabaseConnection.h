@@ -1,5 +1,7 @@
 #pragma once
 #include <sqlite3.h>
+#include <string>
+using namespace std;
 class DatabaseConnection
 {
 	sqlite3 *db;

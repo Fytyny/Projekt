@@ -1,5 +1,6 @@
 #include "projekt.h"
 #include "Zwnswn.h"
+#include "registration.hpp"
 #include "DatabaseConnection.h"
 #include <QtWidgets/QApplication>
 #include <QDebug>
@@ -33,6 +34,12 @@ int main(int argc, char *argv[])
 	string result = " " + imie + " " + nazwisko;
 	char *c = const_cast<char*>(result.c_str());
 	qDebug() << c;
+	QApplication a(argc, argv);
+	Projekt w;
+	w.show();
+	Registration reg;
+	//reg.setWindowModality(true);
+	reg.show();
 	
 
 	/*
@@ -47,6 +54,6 @@ int main(int argc, char *argv[])
 
 	return a.exec(); 
 	*/
-	return 0;
+	return a.exec();
 }
 

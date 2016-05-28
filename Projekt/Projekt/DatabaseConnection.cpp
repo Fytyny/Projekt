@@ -2,8 +2,10 @@
 #include <sqlite3.h>
 #include <QDebug>
 #include <thread>
+#include <string>
 #include <chrono>
 using namespace std::chrono_literals;
+using namespace std;
 
 DatabaseConnection::DatabaseConnection()
 {
