@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "DatabaseConnection.h"
 using namespace std;
 class Person
 {
@@ -24,5 +25,8 @@ public:
 	void setID(int);
 	void setLogin(string);
 	void setPassword(string);
+	int generateID(DatabaseConnection * db);
+	char* toStatement();
+
 };
 

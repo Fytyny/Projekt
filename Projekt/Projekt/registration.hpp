@@ -1,12 +1,13 @@
 ﻿#pragma once
 #include <QWidget>
 #include "ui_registration.h"
+#include "DatabaseConnection.h"
 
 class Registration : public QWidget {
 	Q_OBJECT
 
 public:
-	Registration(QWidget * parent = Q_NULLPTR);
+	Registration(QWidget * parent = Q_NULLPTR, DatabaseConnection * db = NULL);
 	~Registration();
 
 public slots:
@@ -14,4 +15,5 @@ public slots:
 
 private:
 	Ui::Registration ui;
+	DatabaseConnection * db;
 };

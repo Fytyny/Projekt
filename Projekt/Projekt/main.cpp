@@ -18,26 +18,21 @@ int main(int argc, char *argv[])
 {
 	DatabaseConnection base;
 	int check = base.connect();
-	if (check != SQLITE_OK)  
+	if (check == SQLITE_OK)  
 	{
-		qDebug() << "Can't open database";
-		exit(0);
+		qDebug() << "Database openeed successfully ";
+		
 
 	}
 	else
 	{
-		qDebug() << "Database openeed successfully ";
+		qDebug() << "Can't open database";
+		exit(0);
 	}
-	base.createTAB();
-	string imie = "imie";
-	string nazwisko = "nazwwisko";
-	string result = " " + imie + " " + nazwisko;
-	char *c = const_cast<char*>(result.c_str());
-	qDebug() << c;
+
+
 	QApplication a(argc, argv);
-	Projekt w;
-	w.show();
-	Registration reg;
+	Registration reg(NULL,&base);
 	//reg.setWindowModality(true);
 	reg.show();
 	

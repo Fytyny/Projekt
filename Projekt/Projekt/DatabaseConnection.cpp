@@ -34,12 +34,20 @@ int DatabaseConnection::connect()
 	return rc;
 }
 
-int DatabaseConnection::execute(char* newStatement) {
+int DatabaseConnection::execute(char* newStatement)
+{
 	char* sf;
 	int rc = sqlite3_exec(this->db, newStatement, NULL, NULL, &sf);
 	return rc;
 }
-int DatabaseConnection::createTAB() {
+int DatabaseConnection::createTAB()
+{
 	char * statement = "create table users (Id int primary key, Login nvarchar(100) not null , Password nvarchar(100) not null )";
     return this->execute(statement);
+}
+
+int DatabaseConnection::dropTAB()
+{
+	char * statement = "drop table users";
+	return this->execute(statement);
 }
