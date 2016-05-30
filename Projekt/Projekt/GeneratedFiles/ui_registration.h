@@ -159,11 +159,15 @@ public:
 
         password = new QLineEdit(Registration);
         password->setObjectName(QStringLiteral("password"));
+        password->setInputMethodHints(Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData);
+        password->setEchoMode(QLineEdit::Password);
 
         verticalLayout_2->addWidget(password);
 
         confirmPassword = new QLineEdit(Registration);
         confirmPassword->setObjectName(QStringLiteral("confirmPassword"));
+        confirmPassword->setInputMethodHints(Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData);
+        confirmPassword->setEchoMode(QLineEdit::Password);
 
         verticalLayout_2->addWidget(confirmPassword);
 
@@ -201,18 +205,6 @@ public:
 
         horizontalLayout_6->addLayout(verticalLayout_4);
 
-        label->raise();
-        label_2->raise();
-        label_3->raise();
-        label_4->raise();
-        label_5->raise();
-        label_6->raise();
-        firstName->raise();
-        secondName->raise();
-        lastName->raise();
-        login->raise();
-        password->raise();
-        confirmPassword->raise();
 
         retranslateUi(Registration);
         QObject::connect(send, SIGNAL(clicked()), Registration, SLOT(send()));

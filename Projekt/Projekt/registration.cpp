@@ -2,6 +2,7 @@
 #include "Person.h"
 #include "DatabaseConnection.h"
 #include <QDebug>
+#include <QObject>
 #include <QMessageBox>
 #include <string>
 #include <sstream>

@@ -108,10 +108,24 @@
               <widget class="QLineEdit" name="login"/>
              </item>
              <item>
-              <widget class="QLineEdit" name="password"/>
+              <widget class="QLineEdit" name="password">
+               <property name="inputMethodHints">
+                <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+               </property>
+               <property name="echoMode">
+                <enum>QLineEdit::Password</enum>
+               </property>
+              </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="confirmPassword"/>
+              <widget class="QLineEdit" name="confirmPassword">
+               <property name="inputMethodHints">
+                <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+               </property>
+               <property name="echoMode">
+                <enum>QLineEdit::Password</enum>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -167,21 +181,6 @@
     </layout>
    </item>
   </layout>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>label_3</zorder>
-  <zorder>label_4</zorder>
-  <zorder>label_5</zorder>
-  <zorder>label_6</zorder>
-  <zorder>firstName</zorder>
-  <zorder>secondName</zorder>
-  <zorder>lastName</zorder>
-  <zorder>login</zorder>
-  <zorder>password</zorder>
-  <zorder>confirmPassword</zorder>
-  <zorder></zorder>
-  <zorder>horizontalLayoutWidget</zorder>
-  <zorder></zorder>
   <zorder></zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -191,17 +190,20 @@
    <sender>send</sender>
    <signal>clicked()</signal>
    <receiver>Registration</receiver>
-   <slot>close()</slot>
+   <slot>send()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>204</x>
-     <y>212</y>
+     <x>187</x>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
-     <x>219</x>
-     <y>294</y>
+     <x>217</x>
+     <y>334</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>send()</slot>
+ </slots>
 </ui>
