@@ -7,9 +7,10 @@ class Person
 	string firstName;
 	string secondName;
 	string lastName;
-	int id;
+	int id = 0;
 	string login;
 	string password;
+	unsigned long long accountNumber;
 public:
 	Person();
 	~Person();
@@ -18,15 +19,18 @@ public:
 	string getLastName();
 	int getID();
 	string getLogin();
-	string getPassowrd();
+	string getPassword();
 	void setFirstName(string);
 	void setSecondName(string);
 	void setLastName(string);
-	void setID(int);
 	void setLogin(string);
 	void setPassword(string);
-	int generateID(DatabaseConnection * db);
-	char* toStatement();
-
+	long long getAccountNumber();
+	void generateID(DatabaseConnection*);
+	void generateAccountNumber(DatabaseConnection*);
+	string toAccounts();
+	string toDetails();
+	string toNumbers();
+	
 };
 

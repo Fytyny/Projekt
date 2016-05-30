@@ -1,6 +1,7 @@
 #include "projekt.h"
 #include "Zwnswn.h"
 #include "registration.hpp"
+#include "Person.h"
 #include "DatabaseConnection.h"
 #include <QtWidgets/QApplication>
 #include <QDebug>
@@ -17,8 +18,7 @@ QDebug operator<< (QDebug d, const Zwnswn &c) {
 int main(int argc, char *argv[])
 {
 	DatabaseConnection base;
-	int check = base.connect();
-	if (check == SQLITE_OK)  
+	if (base.connect() == SQLITE_OK)  
 	{
 		qDebug() << "Database openeed successfully ";
 		
@@ -29,7 +29,13 @@ int main(int argc, char *argv[])
 		qDebug() << "Can't open database";
 		exit(0);
 	}
-
+	qDebug() << base.dropTabAccounts();
+	qDebug() << base.dropTabDetails();
+	qDebug() << base.dropTabNumbers();
+	qDebug() << base.createTabAccounts();
+	qDebug() << base.createTabDetails();
+	qDebug() << base.createTabNumbers();
+	
 
 	QApplication a(argc, argv);
 	Registration reg(NULL,&base);

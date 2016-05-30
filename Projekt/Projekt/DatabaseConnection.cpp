@@ -22,7 +22,7 @@ int DatabaseConnection::disconnect()
 	while (rc == SQLITE_BUSY) 
 	{
 		rc = sqlite3_close(this->db);
-		std::this_thread::sleep_for(1s);
+		this_thread::sleep_for(1s);
 	}
 	qDebug() << "Successfully disconnected db";
 	return rc;
@@ -34,20 +34,58 @@ int DatabaseConnection::connect()
 	return rc;
 }
 
-int DatabaseConnection::execute(char* newStatement)
+int DatabaseConnection::execute(const char* newStatement)
 {
 	char* sf;
 	int rc = sqlite3_exec(this->db, newStatement, NULL, NULL, &sf);
 	return rc;
 }
-int DatabaseConnection::createTAB()
+
+int DatabaseConnection::execute(string newStatement)
 {
-	char * statement = "create table users (Id int primary key, Login nvarchar(100) not null , Password nvarchar(100) not null )";
+	
+	char* sf = strdup(newStatement.c_str());
+	int rc = sqlite3_exec(this->db, sf, NULL, NULL, &sf);
+	return rc;
+}
+
+int DatabaseConnection::execute(char* newStatement, int (*callback)(void*, int, char** , char**), void *data )
+{
+	char* sf;
+	int rc = sqlite3_exec(this->db, newStatement, callback, data, &sf);
+	return rc;
+}
+int DatabaseConnection::createTabAccounts()
+{
+	char * statement = "create table accounts (ID int primary key not null, Login nvarchar(100) not null , Password nvarchar(100) not null)";
     return this->execute(statement);
 }
 
-int DatabaseConnection::dropTAB()
+int DatabaseConnection::dropTabAccounts()
 {
-	char * statement = "drop table users";
+	char * statement = "drop table accounts";
+	return this->execute(statement);
+}
+
+int DatabaseConnection::createTabDetails()
+{
+	char * statement = "create table details (userID int, firstName nvarchar(100) , secondName nvarchar(100), lastName nvarchar (100), foreign key(userID) references accounts(ID) on delete cascade )";
+	return this->execute(statement);
+}
+
+int DatabaseConnection::dropTabDetails()
+{
+	char * statement = "drop table details";
+	return this->execute(statement);
+}
+
+int DatabaseConnection::createTabNumbers()
+{
+	char * statement = "create table numbers (userID int, accountNumber unsigned BIGINT, foreign key(userID) references accounts(ID) on delete cascade )";
+	return this->execute(statement);
+}
+int DatabaseConnection::dropTabNumbers()
+{
+	char * statement = "drop table numbers";
 	return this->execute(statement);
 }

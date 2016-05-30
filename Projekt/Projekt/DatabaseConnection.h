@@ -5,14 +5,21 @@ using namespace std;
 class DatabaseConnection
 {
 	sqlite3 *db;
-	int execute(char*);
+	
 	
 public:
 	DatabaseConnection();
 	~DatabaseConnection();
 	int connect();
 	int disconnect();
-	int createTAB();
-	int dropTAB();
+	int createTabAccounts();
+	int dropTabAccounts();
+	int createTabDetails();
+	int dropTabDetails();
+	int createTabNumbers();
+	int dropTabNumbers();
+	int execute(const char*);
+	int execute(string);
+	int execute(char*, int(*)(void*, int, char**, char**), void*);
 };
 

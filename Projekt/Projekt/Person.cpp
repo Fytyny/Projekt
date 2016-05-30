@@ -1,7 +1,20 @@
 #include "Person.h"
+#include <string>
+#include <sstream>
+#include <QDebug>
+using namespace std;
+
+template <typename T>
+T onlyFirst(char** argv)
+{
+	return static_cast<T>(atol(argv[0]));
+}
+
+
 
 Person::Person()
 {
+
 }
 
 Person::~Person()
@@ -33,7 +46,7 @@ string Person::getLogin()
 	return this->login;
 }
 
-string Person::getPassowrd() 
+string Person::getPassword() 
 {
 	return this->password;
 }
@@ -63,12 +76,79 @@ void Person::setPassword(string password)
 	this->password = password;
 }
 
-void Person::setID(int id)
+long long Person::getAccountNumber()
 {
-	this->id = id;
+	return this->accountNumber;
 }
 
-char* Person::toStatement()
+string Person::toAccounts()
 {
-	return NULL;
+	stringstream result;
+	result << "insert into accounts values ";
+	result << "(" << this->id << ", '" << this->login << "', '" << this->password << "')";
+	string statement = result.str();
+	return statement;
+
+}
+
+string Person::toDetails()
+{
+	stringstream result;
+	result << "insert into details values ";
+	result << "(" << this->id << ", '" << this->firstName << "', '" << this->secondName << "', '" << this->lastName << "')";
+	string statement = result.str();
+	return statement;
+}
+
+void Person::generateID(DatabaseConnection* db)
+{
+	if (this->id == 0)
+	{
+		struct ID {
+			int id;
+			static int callback(void *data, int argc, char **argv, char **azColName)
+			{
+				ID* tmp = static_cast<ID*>(data);
+				if (argv[0] != NULL)
+				{
+					tmp->id = onlyFirst<int>(argv);
+					tmp->id++;
+				}
+				else
+				{
+					tmp->id = 1;
+				}
+				return 0;
+			}
+		};
+		ID tmp;
+		db->execute("select max(ID) from accounts", tmp.callback, &tmp);
+		this->id = tmp.id;
+	}
+}
+
+void Person::generateAccountNumber(DatabaseConnection* db)
+{
+	struct ACC {
+		unsigned long long accNum;
+		static int callback(void *data, int argc, char **argv, char **azColName)
+		{
+			ACC* tmp = static_cast<ACC*>(data);
+			if (argv[0] != NULL)
+			{
+				tmp->accNum = onlyFirst<unsigned long long>(argv);
+				tmp->accNum++;
+			}
+			else
+			{
+				tmp->accNum = 1000000000000000;
+			}
+			return 0;
+		}
+	};
+	ACC tmp;
+	int nowy [26];
+	db->execute("select max(ID) from accounts", tmp.callback, &tmp);
+	this->accountNumber = tmp.accNum;
+	
 }

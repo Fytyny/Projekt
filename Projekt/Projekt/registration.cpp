@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <string>
+#include <sstream>
 using namespace std;
 Registration::Registration(QWidget * parent, DatabaseConnection * db) 
 {
@@ -39,6 +40,45 @@ void Registration::send()
 		p.setLastName(ui.lastName->text().toStdString());
 		p.setLogin(ui.login->text().toStdString());
 		p.setPassword(ui.password->text().toStdString());
-		close();
+		p.generateID(this->db);
+		p.generateAccountNumber(this->db);
+		stringstream result;
+		int err = 0;
+		result << "insert into accounts values ";
+		result << "(" << p.getID() << ", '" << p.getLogin() << "', '" << p.getPassword() << "')";
+		err += db->execute(result.str());
+		result.str(std::string());
+		result << "insert into details values ";
+		result << "(" << p.getID() << ", '" << p.getFirstName() << "', '" << p.getSecondName() << "', '" << p.getLastName() << "')";
+		err += db->execute(result.str());
+		result.str(std::string());
+		result << "insert into numbers values ";
+		result << "(" << p.getID() << ", '" << p.getAccountNumber() << "')";
+		err += db->execute(result.str());
+		result.str(std::string());
+		if (err == 3)
+		{
+			notify.setText("Cannot connect to database.");
+			notify.setIcon(QMessageBox::Critical);
+			notify.exec();
+		}
+		else if (err > 0)
+		{
+			result << "delete from accounts where ID = " << p.getID();
+			db->execute(result.str());
+			result.str(std::string());
+			result << err;
+			notify.setText("Error, cannot create account." + QString::fromStdString(result.str()));
+			notify.setIcon(QMessageBox::Critical);
+			notify.exec();
+		}
+		else
+		{
+			notify.setText("Account created successfully!");
+			notify.setIcon(QMessageBox::Information);
+			notify.exec();
+			close();
+		}
+		
 	}
 }
