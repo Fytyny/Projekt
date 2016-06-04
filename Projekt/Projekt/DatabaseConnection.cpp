@@ -49,15 +49,15 @@ int DatabaseConnection::execute(string newStatement)
 	return rc;
 }
 
-int DatabaseConnection::execute(char* newStatement, int (*callback)(void*, int, char** , char**), void *data )
+int DatabaseConnection::execute(string newStatement, int (*callback)(void*, int, char** , char**), void *data )
 {
-	char* sf;
-	int rc = sqlite3_exec(this->db, newStatement, callback, data, &sf);
+	char* sf = strdup(newStatement.c_str());
+	int rc = sqlite3_exec(this->db, sf, callback, data, &sf);
 	return rc;
 }
 int DatabaseConnection::createTabAccounts()
 {
-	char * statement = "create table accounts (ID int primary key not null, Login nvarchar(100) not null , Password nvarchar(100) not null)";
+	char * statement = "create table accounts (ID int primary key not null, Login nvarchar(100) not null unique , Password nvarchar(100) not null)";
     return this->execute(statement);
 }
 

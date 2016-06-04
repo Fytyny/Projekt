@@ -13,41 +13,7 @@
   <property name="windowTitle">
    <string>Projekt</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>140</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>180</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>220</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -57,20 +23,6 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuSdad">
-    <property name="title">
-     <string>sdad</string>
-    </property>
-    <addaction name="actionAsfasf"/>
-   </widget>
-   <widget class="QMenu" name="menuFsfs">
-    <property name="title">
-     <string>fsfs</string>
-    </property>
-    <addaction name="actionSdad"/>
-   </widget>
-   <addaction name="menuSdad"/>
-   <addaction name="menuFsfs"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -96,22 +48,5 @@
  <resources>
   <include location="projekt.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>ProjektClass</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>261</x>
-     <y>264</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>383</x>
-     <y>318</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

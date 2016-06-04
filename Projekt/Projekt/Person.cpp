@@ -152,3 +152,28 @@ void Person::generateAccountNumber(DatabaseConnection* db)
 	this->accountNumber = tmp.accNum;
 	
 }
+
+bool Person::getPersonFromDataBase(string login, string password, DatabaseConnection* db)
+{
+	struct X {
+		bool check = false;
+		static int callback(void *data, int argc, char **argv, char **azColName)
+		{
+			X* tmp = static_cast<X*>(data);
+			tmp->check = true;
+			if (argv[0] == NULL)
+			{
+				return 1;
+			}
+			else
+			{
+			}
+			return 0;
+		}
+	};
+	X tmp;
+	string query = "select * from accounts where Login = '" + login + "' AND Password = '" + password + "'";
+	int rc = db->execute(query, tmp.callback, &tmp);
+	return tmp.check;
+
+}

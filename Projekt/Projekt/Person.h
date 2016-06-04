@@ -14,6 +14,7 @@ class Person
 public:
 	Person();
 	~Person();
+	bool getPersonFromDataBase(string,string, DatabaseConnection*);
 	string getFirstName();
 	string getSecondName();
 	string getLastName();

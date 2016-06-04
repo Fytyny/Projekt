@@ -20,6 +20,6 @@ public:
 	int dropTabNumbers();
 	int execute(const char*);
 	int execute(string);
-	int execute(char*, int(*)(void*, int, char**, char**), void*);
+	int execute(string, int(*)(void*, int, char**, char**), void*);
 };
 
