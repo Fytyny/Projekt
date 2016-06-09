@@ -41,22 +41,12 @@ void Registration::send()
 		p.setLastName(ui.lastName->text().toStdString());
 		p.setLogin(ui.login->text().toStdString());
 		p.setPassword(ui.password->text().toStdString());
+
 		p.generateID(this->db);
 		p.generateAccountNumber(this->db);
-		stringstream result;
-		int err = 0;
-		result << "insert into accounts values ";
-		result << "(" << p.getID() << ", '" << p.getLogin() << "', '" << p.getPassword() << "')";
-		err += db->execute(result.str());
-		result.str(std::string());
-		result << "insert into details values ";
-		result << "(" << p.getID() << ", '" << p.getFirstName() << "', '" << p.getSecondName() << "', '" << p.getLastName() << "')";
-		err += db->execute(result.str());
-		result.str(std::string());
-		result << "insert into numbers values ";
-		result << "(" << p.getID() << ", '" << p.getAccountNumber() << "')";
-		err += db->execute(result.str());
-		result.str(std::string());
+		
+		int err = p.insertIntoDb(this->db);
+		
 		if (err == 3)
 		{
 			notify.setText("Cannot connect to database.");
@@ -65,11 +55,10 @@ void Registration::send()
 		}
 		else if (err > 0)
 		{
-			result << "delete from accounts where ID = " << p.getID();
-			db->execute(result.str());
-			result.str(std::string());
-			result << err;
-			notify.setText("Error, cannot create account." + QString::fromStdString(result.str()));
+			stringstream info;
+			p.deleteFromDb(this->db);
+			info << err;
+			notify.setText("Error, cannot create account." + QString::fromStdString(info.str()));
 			notify.setIcon(QMessageBox::Critical);
 			notify.exec();
 		}

@@ -202,7 +202,6 @@
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="projekt.cpp" />
     <ClCompile Include="registration.cpp" />
-    <ClCompile Include="tes.cpp" />
     <ClCompile Include="Zwnswn.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -307,7 +306,6 @@
     </CustomBuild>
     <ClInclude Include="Person.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="tes.h" />
     <ClInclude Include="Zwnswn.h" />
   </ItemGroup>
   <ItemGroup>

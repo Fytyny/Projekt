@@ -86,9 +86,6 @@
     <ClCompile Include="accountview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="projekt.h">
@@ -142,9 +139,6 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

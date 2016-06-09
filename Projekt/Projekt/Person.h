@@ -32,6 +32,8 @@ public:
 	string toAccounts();
 	string toDetails();
 	string toNumbers();
+	int insertIntoDb(DatabaseConnection*);
+	int deleteFromDb(DatabaseConnection*)
 	
 };
 

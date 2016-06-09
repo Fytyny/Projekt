@@ -3,6 +3,8 @@
 #include "tes.h"
 #include "DatabaseConnection.h"	
 #include "login.hpp"
+#include "main.cpp"
+#include <QtTest\qtest.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -18,17 +20,29 @@ namespace UnitTest
 			Assert::AreEqual(25, h.i, 0);
 			h.set(26);
 			Assert::AreEqual(26, h.i, 0);
-			// TODO: Your test code here
 		}
 
-		TEST_METHOD(NotSoObvious)
+		TEST_METHOD(baseTest)
 		{
-			DatabaseConnection y;
+			DatabaseConnection base;
+			Assert::AreEqual(base.connect(), SQLITE_OK, 0);
+			Assert::AreEqual(base.dropTabAccounts(), SQLITE_OK, 0);
+			Assert::AreEqual(base.dropTabDetails(), SQLITE_OK, 0);
+			Assert::AreEqual(base.dropTabNumbers(), SQLITE_OK, 0);
+			Assert::AreEqual(base.createTabAccounts(), SQLITE_OK, 0);
+			Assert::AreEqual(base.createTabDetails(), SQLITE_OK, 0);
+			Assert::AreEqual(base.createTabNumbers(), SQLITE_OK, 0);
 
-			y.connect();
-
-			Login z;
-
-		}	
+			Person a;
+			a.setLogin("log");
+			a.setPassword("pas");
+			a.setFirstName("as");
+			a.setSecondName("karo");
+			a.setLastName("kierowski");
+			a.generateID(&base);
+			a.generateAccountNumber(&base);
+			
+			a.insertIntoDb(&base);
+		}
 	};
 }

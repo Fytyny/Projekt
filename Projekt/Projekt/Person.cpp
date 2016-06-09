@@ -177,3 +177,35 @@ bool Person::getPersonFromDataBase(string login, string password, DatabaseConnec
 	return tmp.check;
 
 }
+
+int Person::insertIntoDb(DatabaseConnection* db)
+{
+	int err = 0;
+	stringstream result;
+
+	result << "insert into accounts values ";
+	result << "(" << getID() << ", '" << getLogin() << "', '" << getPassword() << "')";
+	err += db->execute(result.str());
+	result.str(std::string()); //stringstream clear
+
+	result << "insert into details values ";
+	result << "(" << getID() << ", '" << getFirstName() << "', '" << getSecondName() << "', '" << getLastName() << "')";
+	err += db->execute(result.str());
+	result.str(std::string());
+
+	result << "insert into numbers values ";
+	result << "(" << getID() << ", '" << getAccountNumber() << "')";
+	err += db->execute(result.str());
+	result.str(std::string());
+
+	return err;
+
+}
+
+int Person::deleteFromDb(DatabaseConnection* db)
+{
+	stringstream result;
+	result << "delete from accounts where ID = " << getID();
+	return db->execute(result.str());
+	
+}
