@@ -138,5 +138,11 @@
     <ClInclude Include="GeneratedFiles\ui_accountview.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Projekt.rc" />
   </ItemGroup>
 </Project>
