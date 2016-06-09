@@ -45,14 +45,14 @@ int DatabaseConnection::execute(string newStatement)
 {
 	
 	char* sf = strdup(newStatement.c_str());
-	int rc = sqlite3_exec(this->db, sf, NULL, NULL, &sf);
+	int rc = sqlite3_exec(this->db, sf, NULL, NULL, NULL);
 	return rc;
 }
 
 int DatabaseConnection::execute(string newStatement, int (*callback)(void*, int, char** , char**), void *data )
 {
 	char* sf = strdup(newStatement.c_str());
-	int rc = sqlite3_exec(this->db, sf, callback, data, &sf);
+	int rc = sqlite3_exec(this->db, sf, callback, data, NULL);
 	return rc;
 }
 int DatabaseConnection::createTabAccounts()
@@ -81,7 +81,7 @@ int DatabaseConnection::dropTabDetails()
 
 int DatabaseConnection::createTabNumbers()
 {
-	char * statement = "create table numbers (userID int, accountNumber unsigned BIGINT, foreign key(userID) references accounts(ID) on delete cascade )";
+	char * statement = "create table numbers (userID int, accountNumber unsigned bigint, foreign key(userID) references accounts(ID) on delete cascade )";
 	return this->execute(statement);
 }
 int DatabaseConnection::dropTabNumbers()

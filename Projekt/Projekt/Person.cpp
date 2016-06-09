@@ -5,9 +5,10 @@
 using namespace std;
 
 template <typename T>
-T onlyFirst(char** argv)
+T onlyFirst(char** argv, int i)
 {
-	return static_cast<T>(atol(argv[0]));
+	return static_cast<T>(atoll(argv[i]));
+	
 }
 
 
@@ -76,9 +77,14 @@ void Person::setPassword(string password)
 	this->password = password;
 }
 
-long long Person::getAccountNumber()
+unsigned long long Person::getAccountNumber()
 {
 	return this->accountNumber;
+}
+
+void Person::setID(int id)
+{
+	this->id = id;
 }
 
 string Person::toAccounts()
@@ -111,7 +117,7 @@ void Person::generateID(DatabaseConnection* db)
 				ID* tmp = static_cast<ID*>(data);
 				if (argv[0] != NULL)
 				{
-					tmp->id = onlyFirst<int>(argv);
+					tmp->id = onlyFirst<int>(argv, 0);
 					tmp->id++;
 				}
 				else
@@ -136,7 +142,7 @@ void Person::generateAccountNumber(DatabaseConnection* db)
 			ACC* tmp = static_cast<ACC*>(data);
 			if (argv[0] != NULL)
 			{
-				tmp->accNum = onlyFirst<unsigned long long>(argv);
+				tmp->accNum = onlyFirst<unsigned long long>(argv,0);
 				tmp->accNum++;
 			}
 			else
@@ -153,28 +159,56 @@ void Person::generateAccountNumber(DatabaseConnection* db)
 	
 }
 
-bool Person::getPersonFromDataBase(string login, string password, DatabaseConnection* db)
+int Person::getPersonFromDataBase(string login, string password, DatabaseConnection* db)
 {
 	struct X {
-		bool check = false;
-		static int callback(void *data, int argc, char **argv, char **azColName)
+		static int getID(void *data, int argc, char **argv, char **azColName)
 		{
-			X* tmp = static_cast<X*>(data);
-			tmp->check = true;
-			if (argv[0] == NULL)
-			{
-				return 1;
-			}
-			else
-			{
-			}
-			return 0;
+
+			Person* wsk = static_cast<Person*>(data);
+			wsk->setID(onlyFirst<int>(argv, 0));
+			return 1;
+		}
+		static int getPrimaryInfo(void *data, int argc, char **argv, char **azColName)
+		{
+			Person* wsk = static_cast<Person*>(data);
+			wsk->setFirstName(argv[1]);
+			wsk->setSecondName(argv[2]);
+			wsk->setLastName(argv[3]);
+			return 1;
+
+		}
+		static int getNumber(void *data, int argc, char **argv, char **azColName)
+		{
+			Person* wsk = static_cast<Person*>(data);
+			wsk->setAccountNumber(onlyFirst<unsigned long long>(argv, 1));
+			return 1;
 		}
 	};
 	X tmp;
 	string query = "select * from accounts where Login = '" + login + "' AND Password = '" + password + "'";
-	int rc = db->execute(query, tmp.callback, &tmp);
-	return tmp.check;
+	int rc = db->execute(query, tmp.getID, this);
+	if (rc == SQLITE_ABORT)
+	{
+		this->login = login;
+		this->password = password;
+		int err = rc;
+		stringstream res;
+		res << "select * from details where UserID = '" << id << "'";
+		err += db->execute(res.str(), tmp.getPrimaryInfo, this);
+		res.str(std::string());
+		res << "select * from numbers where UserID = '" << id << "'";
+		err += db->execute(res.str(), tmp.getNumber, this);
+		if (err != 12)
+		{
+			return 12;
+		}
+	} 
+	else
+	{
+		return 1;
+	}
+	return 0;
 
 }
 
@@ -187,7 +221,7 @@ int Person::insertIntoDb(DatabaseConnection* db)
 	result << "(" << getID() << ", '" << getLogin() << "', '" << getPassword() << "')";
 	err += db->execute(result.str());
 	result.str(std::string()); //stringstream clear
-
+	
 	result << "insert into details values ";
 	result << "(" << getID() << ", '" << getFirstName() << "', '" << getSecondName() << "', '" << getLastName() << "')";
 	err += db->execute(result.str());
@@ -208,4 +242,9 @@ int Person::deleteFromDb(DatabaseConnection* db)
 	result << "delete from accounts where ID = " << getID();
 	return db->execute(result.str());
 	
+}
+
+void Person::setAccountNumber(unsigned long long i)
+{
+	this->accountNumber = i;
 }

@@ -14,10 +14,11 @@ class Person
 public:
 	Person();
 	~Person();
-	bool getPersonFromDataBase(string,string, DatabaseConnection*);
+	int getPersonFromDataBase(string,string, DatabaseConnection*);
 	string getFirstName();
 	string getSecondName();
 	string getLastName();
+	void setID(int id);
 	int getID();
 	string getLogin();
 	string getPassword();
@@ -26,14 +27,15 @@ public:
 	void setLastName(string);
 	void setLogin(string);
 	void setPassword(string);
-	long long getAccountNumber();
+	unsigned long long getAccountNumber();
+	void setAccountNumber(unsigned long long);
 	void generateID(DatabaseConnection*);
 	void generateAccountNumber(DatabaseConnection*);
 	string toAccounts();
 	string toDetails();
 	string toNumbers();
 	int insertIntoDb(DatabaseConnection*);
-	int deleteFromDb(DatabaseConnection*)
-	
+	int deleteFromDb(DatabaseConnection*);
+
 };
 
