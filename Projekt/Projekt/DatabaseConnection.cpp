@@ -81,11 +81,23 @@ int DatabaseConnection::dropTabDetails()
 
 int DatabaseConnection::createTabNumbers()
 {
-	char * statement = "create table numbers (userID int, accountNumber unsigned bigint, foreign key(userID) references accounts(ID) on delete cascade )";
+	char * statement = "create table numbers (userID int, accountNumber unsigned bigint, amountOfMoney real, typeOfMoney nvarchar(3), foreign key(userID) references accounts(ID) on delete cascade )";
 	return this->execute(statement);
 }
 int DatabaseConnection::dropTabNumbers()
 {
 	char * statement = "drop table numbers";
+	return this->execute(statement);
+}
+
+int DatabaseConnection::createTabNotify()
+{
+	char * statement = "create table notify (userID int, giverID , giver boolean, amountOfMoney real, typeOfMoney nvarchar(3), data datetime, foreign key(userID) references accounts(ID) on delete cascade )";
+	return this->execute(statement);
+}
+
+int DatabaseConnection::dropTabNotify()
+{
+	char * statement = "drop table notify";
 	return this->execute(statement);
 }

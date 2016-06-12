@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "DatabaseConnection.h"
+#include "Currency.h"
 using namespace std;
 class Person
 {
@@ -11,6 +12,8 @@ class Person
 	string login;
 	string password;
 	unsigned long long accountNumber;
+	Currency vault;
+	
 public:
 	Person();
 	~Person();
@@ -31,11 +34,11 @@ public:
 	void setAccountNumber(unsigned long long);
 	void generateID(DatabaseConnection*);
 	void generateAccountNumber(DatabaseConnection*);
-	string toAccounts();
-	string toDetails();
-	string toNumbers();
+	int updatePassword(DatabaseConnection*);
+	int updateCash(DatabaseConnection*);
 	int insertIntoDb(DatabaseConnection*);
 	int deleteFromDb(DatabaseConnection*);
+	Currency* getCurrency();
 
 };
 

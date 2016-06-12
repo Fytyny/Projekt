@@ -35,28 +35,15 @@ int main(int argc, char *argv[])
 	qDebug() << base.createTabAccounts();
 	qDebug() << base.createTabDetails();
 	qDebug() << base.createTabNumbers();
-	
+	qDebug() << base.dropTabNotify();
+	qDebug() << base.createTabNotify();
 
 	QApplication a(argc, argv);
-	//Registration reg(NULL,&base);
+
 	Projekt main(NULL, &base);
 	
 	main.show();
-	//reg.setWindowModality(true);
-	
 
-	/*
-	QApplication a(argc, argv);
-	Projekt w;
-
-	w.show();
-	const QDate curr = QDate::currentDate();
-	Zwnswn jot;
-	jot << qDebug();
-	qDebug() << "jot" << jot;
-
-	return a.exec(); 
-	*/
 	return a.exec();
 }
 

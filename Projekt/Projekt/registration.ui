@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>459</width>
-    <height>281</height>
+    <width>537</width>
+    <height>331</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -154,6 +154,13 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="send">
          <property name="text">
           <string>Send</string>
@@ -193,17 +200,34 @@
    <slot>send()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>221</y>
+     <x>252</x>
+     <y>235</y>
     </hint>
     <hint type="destinationlabel">
-     <x>217</x>
-     <y>334</y>
+     <x>316</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Registration</receiver>
+   <slot>goBack()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>235</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>183</x>
+     <y>280</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>send()</slot>
+  <slot>goBack()</slot>
  </slots>
 </ui>

@@ -13,12 +13,12 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCommandLinkButton>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -28,28 +28,28 @@ class Ui_Login
 {
 public:
     QPushButton *logButton;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
-    QSpacerItem *horizontalSpacer;
     QLineEdit *login;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label2;
     QLineEdit *password;
+    QCommandLinkButton *commandLinkButton;
 
     void setupUi(QWidget *Login)
     {
         if (Login->objectName().isEmpty())
             Login->setObjectName(QStringLiteral("Login"));
-        Login->resize(527, 412);
+        Login->resize(540, 409);
         logButton = new QPushButton(Login);
         logButton->setObjectName(QStringLiteral("logButton"));
-        logButton->setGeometry(QRect(210, 240, 75, 23));
-        widget = new QWidget(Login);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(150, 160, 193, 52));
-        verticalLayout = new QVBoxLayout(widget);
+        logButton->setGeometry(QRect(260, 250, 75, 23));
+        layoutWidget = new QWidget(Login);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(190, 170, 217, 52));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
@@ -57,16 +57,12 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        label = new QLabel(widget);
+        label = new QLabel(layoutWidget);
         label->setObjectName(QStringLiteral("label"));
 
         horizontalLayout->addWidget(label);
 
-        horizontalSpacer = new QSpacerItem(14, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer);
-
-        login = new QLineEdit(widget);
+        login = new QLineEdit(layoutWidget);
         login->setObjectName(QStringLiteral("login"));
 
         horizontalLayout->addWidget(login);
@@ -77,19 +73,23 @@ public:
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        label2 = new QLabel(widget);
+        label2 = new QLabel(layoutWidget);
         label2->setObjectName(QStringLiteral("label2"));
 
         horizontalLayout_2->addWidget(label2);
 
-        password = new QLineEdit(widget);
+        password = new QLineEdit(layoutWidget);
         password->setObjectName(QStringLiteral("password"));
+        password->setEnabled(true);
 
         horizontalLayout_2->addWidget(password);
 
 
         verticalLayout->addLayout(horizontalLayout_2);
 
+        commandLinkButton = new QCommandLinkButton(Login);
+        commandLinkButton->setObjectName(QStringLiteral("commandLinkButton"));
+        commandLinkButton->setGeometry(QRect(230, 320, 185, 41));
 #ifndef QT_NO_SHORTCUT
         label->setBuddy(login);
         label2->setBuddy(password);
@@ -97,6 +97,7 @@ public:
 
         retranslateUi(Login);
         QObject::connect(logButton, SIGNAL(clicked()), Login, SLOT(send()));
+        QObject::connect(commandLinkButton, SIGNAL(clicked()), Login, SLOT(regButton()));
 
         QMetaObject::connectSlotsByName(Login);
     } // setupUi
@@ -105,8 +106,9 @@ public:
     {
         Login->setWindowTitle(QApplication::translate("Login", "Login", 0));
         logButton->setText(QApplication::translate("Login", "Log in", 0));
-        label->setText(QApplication::translate("Login", "Login:", 0));
+        label->setText(QApplication::translate("Login", "Login:       ", 0));
         label2->setText(QApplication::translate("Login", "Password:", 0));
+        commandLinkButton->setText(QApplication::translate("Login", "Register", 0));
     } // retranslateUi
 
 };

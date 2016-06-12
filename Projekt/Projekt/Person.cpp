@@ -87,24 +87,6 @@ void Person::setID(int id)
 	this->id = id;
 }
 
-string Person::toAccounts()
-{
-	stringstream result;
-	result << "insert into accounts values ";
-	result << "(" << this->id << ", '" << this->login << "', '" << this->password << "')";
-	string statement = result.str();
-	return statement;
-
-}
-
-string Person::toDetails()
-{
-	stringstream result;
-	result << "insert into details values ";
-	result << "(" << this->id << ", '" << this->firstName << "', '" << this->secondName << "', '" << this->lastName << "')";
-	string statement = result.str();
-	return statement;
-}
 
 void Person::generateID(DatabaseConnection* db)
 {
@@ -182,6 +164,10 @@ int Person::getPersonFromDataBase(string login, string password, DatabaseConnect
 		{
 			Person* wsk = static_cast<Person*>(data);
 			wsk->setAccountNumber(onlyFirst<unsigned long long>(argv, 1));
+			double s;
+			s = std::stod(static_cast<string>(argv[2]));
+			string t = argv[3];
+			wsk->getCurrency()->setCash(s, t);
 			return 1;
 		}
 	};
@@ -228,7 +214,7 @@ int Person::insertIntoDb(DatabaseConnection* db)
 	result.str(std::string());
 
 	result << "insert into numbers values ";
-	result << "(" << getID() << ", '" << getAccountNumber() << "')";
+	result << "(" << getID() << ", '" << getAccountNumber() << "' ,'"<< 0 <<"' ,'"<<vault.getType() <<"')";
 	err += db->execute(result.str());
 	result.str(std::string());
 
@@ -247,4 +233,15 @@ int Person::deleteFromDb(DatabaseConnection* db)
 void Person::setAccountNumber(unsigned long long i)
 {
 	this->accountNumber = i;
+}
+
+Currency* Person::getCurrency()
+{
+	return &this->vault;
+}
+int Person::updatePassword(DatabaseConnection* db)
+{
+	stringstream query;
+	query << "update accounts set password = '"<< getPassword() <<"' where ID = " << getID();
+	return db->execute(query.str());
 }

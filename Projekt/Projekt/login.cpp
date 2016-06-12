@@ -1,12 +1,13 @@
 ﻿#include "login.hpp"
 #include "Person.h"
 #include <QMessageBox>
+#include <projekt.h>
 
-Login::Login(QMainWindow * parent, DatabaseConnection * db) : QWidget(parent)
+Login::Login(Projekt * parent, DatabaseConnection * db) : QWidget(parent)
 {
 	ui.setupUi(this);
 	this->db = db;
-	
+	this->parent = parent;
 }
 
 Login::~Login()
@@ -17,14 +18,15 @@ Login::~Login()
 void Login::send()
 {
 	QMessageBox notification;
-	Person s;
+	Person* s = new Person();
 	if (!ui.login->text().isEmpty() && !ui.password->text().isEmpty()) {
-		if (s.getPersonFromDataBase(ui.login->text().toStdString(), ui.password->text().toStdString(), db) == true)
+		if (s->getPersonFromDataBase(ui.login->text().toStdString(), ui.password->text().toStdString(), db) == 0)
 		{
 			notification.setIcon(QMessageBox::Information);
 			notification.setText("Successfully logged into account.");
 			notification.exec();
-			close();
+			parent->setPerson(s);
+			parent->setAccountViewScreen();
 		}
 		else
 		{
@@ -39,4 +41,10 @@ void Login::send()
 		notification.setText("Some fields are empty");
 		notification.exec();
 	}
+}
+
+void Login::regButton()
+{
+	parent->setRegistrationScreen();
+	
 }

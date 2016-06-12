@@ -7,10 +7,11 @@
 #include <string>
 #include <sstream>
 using namespace std;
-Registration::Registration(QWidget * parent, DatabaseConnection * db) 
+Registration::Registration(Projekt * parent, DatabaseConnection * db) 
 {
 	ui.setupUi(this);
 	this->db = db;
+	this->parent = parent;
 }
 
 Registration::~Registration() 
@@ -67,8 +68,14 @@ void Registration::send()
 			notify.setText("Account created successfully!");
 			notify.setIcon(QMessageBox::Information);
 			notify.exec();
-			close();
+			goBack();
 		}
 		
 	}
+	
+}
+
+void Registration::goBack()
+{
+	parent->setLoginScreen();
 }

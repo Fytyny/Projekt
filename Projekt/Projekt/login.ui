@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
-    <height>412</height>
+    <width>540</width>
+    <height>409</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="logButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>240</y>
+     <x>260</x>
+     <y>250</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -26,12 +26,12 @@
     <string>Log in</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>160</y>
-     <width>193</width>
+     <x>190</x>
+     <y>170</y>
+     <width>217</width>
      <height>52</height>
     </rect>
    </property>
@@ -41,25 +41,12 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Login:</string>
+         <string>Login:       </string>
         </property>
         <property name="buddy">
          <cstring>login</cstring>
         </property>
        </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>14</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
       <item>
        <widget class="QLineEdit" name="login"/>
@@ -79,11 +66,28 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="password"/>
+       <widget class="QLineEdit" name="password">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
    </layout>
+  </widget>
+  <widget class="QCommandLinkButton" name="commandLinkButton">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>320</y>
+     <width>185</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Register</string>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -96,17 +100,34 @@
    <slot>send()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>274</x>
-     <y>249</y>
+     <x>284</x>
+     <y>250</y>
     </hint>
     <hint type="destinationlabel">
      <x>387</x>
-     <y>291</y>
+     <y>126</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>commandLinkButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Login</receiver>
+   <slot>regButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>230</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>164</x>
+     <y>126</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>send()</slot>
+  <slot>regButton()</slot>
  </slots>
 </ui>

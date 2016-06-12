@@ -18,6 +18,8 @@ public:
 	int dropTabDetails();
 	int createTabNumbers();
 	int dropTabNumbers();
+	int createTabNotify();
+	int dropTabNotify();
 	int execute(const char*);
 	int execute(string);
 	int execute(string, int(*)(void*, int, char**, char**), void*);

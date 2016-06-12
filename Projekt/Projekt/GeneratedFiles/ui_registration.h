@@ -52,6 +52,7 @@ public:
     QLineEdit *confirmPassword;
     QHBoxLayout *horizontalLayout_4;
     QSpacerItem *horizontalSpacer_2;
+    QPushButton *pushButton;
     QPushButton *send;
     QSpacerItem *horizontalSpacer_3;
 
@@ -59,7 +60,7 @@ public:
     {
         if (Registration->objectName().isEmpty())
             Registration->setObjectName(QStringLiteral("Registration"));
-        Registration->resize(459, 281);
+        Registration->resize(537, 331);
         horizontalLayout_6 = new QHBoxLayout(Registration);
         horizontalLayout_6->setSpacing(6);
         horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
@@ -190,6 +191,11 @@ public:
 
         horizontalLayout_4->addItem(horizontalSpacer_2);
 
+        pushButton = new QPushButton(Registration);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        horizontalLayout_4->addWidget(pushButton);
+
         send = new QPushButton(Registration);
         send->setObjectName(QStringLiteral("send"));
 
@@ -208,6 +214,7 @@ public:
 
         retranslateUi(Registration);
         QObject::connect(send, SIGNAL(clicked()), Registration, SLOT(send()));
+        QObject::connect(pushButton, SIGNAL(clicked()), Registration, SLOT(goBack()));
 
         QMetaObject::connectSlotsByName(Registration);
     } // setupUi
@@ -221,6 +228,7 @@ public:
         label_4->setText(QApplication::translate("Registration", "                    Login:", 0));
         label_5->setText(QApplication::translate("Registration", "             Password:", 0));
         label_6->setText(QApplication::translate("Registration", "Confirm password:", 0));
+        pushButton->setText(QApplication::translate("Registration", "Back", 0));
         send->setText(QApplication::translate("Registration", "Send", 0));
     } // retranslateUi
 
