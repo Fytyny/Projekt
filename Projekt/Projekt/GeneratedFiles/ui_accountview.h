@@ -20,6 +20,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -35,17 +36,22 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QTextBrowser *textBrowser;
-    QCommandLinkButton *commandLinkButton;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_2;
     QLabel *FirstName;
     QLabel *LastName;
+    QWidget *layoutWidget1;
+    QVBoxLayout *verticalLayout;
+    QCommandLinkButton *commandLinkButton;
+    QCommandLinkButton *commandLinkButton_2;
 
     void setupUi(QWidget *AccountView)
     {
         if (AccountView->objectName().isEmpty())
             AccountView->setObjectName(QStringLiteral("AccountView"));
-        AccountView->resize(627, 399);
+        AccountView->resize(620, 395);
+        AccountView->setMinimumSize(QSize(620, 395));
+        AccountView->setMaximumSize(QSize(620, 395));
         horizontalLayoutWidget = new QWidget(AccountView);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
         horizontalLayoutWidget->setGeometry(QRect(280, 320, 301, 41));
@@ -98,9 +104,6 @@ public:
         textBrowser = new QTextBrowser(AccountView);
         textBrowser->setObjectName(QStringLiteral("textBrowser"));
         textBrowser->setGeometry(QRect(280, 40, 301, 271));
-        commandLinkButton = new QCommandLinkButton(AccountView);
-        commandLinkButton->setObjectName(QStringLiteral("commandLinkButton"));
-        commandLinkButton->setGeometry(QRect(40, 60, 185, 41));
         layoutWidget = new QWidget(AccountView);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(20, 10, 361, 25));
@@ -123,11 +126,30 @@ public:
 
         horizontalLayout_2->addWidget(LastName);
 
+        layoutWidget1 = new QWidget(AccountView);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(40, 60, 174, 91));
+        verticalLayout = new QVBoxLayout(layoutWidget1);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        commandLinkButton = new QCommandLinkButton(layoutWidget1);
+        commandLinkButton->setObjectName(QStringLiteral("commandLinkButton"));
+
+        verticalLayout->addWidget(commandLinkButton);
+
+        commandLinkButton_2 = new QCommandLinkButton(layoutWidget1);
+        commandLinkButton_2->setObjectName(QStringLiteral("commandLinkButton_2"));
+
+        verticalLayout->addWidget(commandLinkButton_2);
+
 
         retranslateUi(AccountView);
         QObject::connect(pushButton, SIGNAL(clicked()), AccountView, SLOT(logOut()));
         QObject::connect(pushButton_2, SIGNAL(clicked()), AccountView, SLOT(showPersonData()));
         QObject::connect(commandLinkButton, SIGNAL(clicked()), AccountView, SLOT(sendMoney()));
+        QObject::connect(commandLinkButton_2, SIGNAL(clicked()), AccountView, SLOT(cleanNotify()));
 
         QMetaObject::connectSlotsByName(AccountView);
     } // setupUi
@@ -138,10 +160,11 @@ public:
         label->setText(QApplication::translate("AccountView", "Cash:", 0));
         type->setText(QApplication::translate("AccountView", "TYP", 0));
         pushButton->setText(QApplication::translate("AccountView", "Log Out", 0));
-        pushButton_2->setText(QApplication::translate("AccountView", "Ja", 0));
-        commandLinkButton->setText(QApplication::translate("AccountView", "Send Money", 0));
+        pushButton_2->setText(QApplication::translate("AccountView", "Me", 0));
         FirstName->setText(QApplication::translate("AccountView", "TextLabel", 0));
         LastName->setText(QApplication::translate("AccountView", "TextLabel", 0));
+        commandLinkButton->setText(QApplication::translate("AccountView", "Send Money", 0));
+        commandLinkButton_2->setText(QApplication::translate("AccountView", "Clean notifications", 0));
     } // retranslateUi
 
 };

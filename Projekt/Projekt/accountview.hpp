@@ -12,13 +12,16 @@ class AccountView : public QWidget {
 public:
 	AccountView(Projekt * parent, DatabaseConnection* db, Person * user);
 	~AccountView();
+	int loadNotify();
 public slots:
 	void logOut();
 	void showPersonData();
 	void sendMoney();
+	void cleanNotify();
 
 private:
 	Ui::AccountView ui;
 	Person* user;
 	Projekt* parent;
+	DatabaseConnection* db;
 };

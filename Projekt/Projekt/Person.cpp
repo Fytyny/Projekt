@@ -198,6 +198,49 @@ int Person::getPersonFromDataBase(string login, string password, DatabaseConnect
 
 }
 
+int Person::getPersonByNumber(unsigned long long number, DatabaseConnection* db)
+{
+	struct X {
+		static int getID(void *data, int argc, char **argv, char **azColName)
+		{
+
+			Person* wsk = static_cast<Person*>(data);
+			wsk->setID(onlyFirst<int>(argv, 0));
+			return 1;
+		}
+		static int getPrimaryInfo(void *data, int argc, char **argv, char **azColName)
+		{
+			Person* wsk = static_cast<Person*>(data);
+			wsk->setFirstName(argv[1]);
+			wsk->setSecondName(argv[2]);
+			wsk->setLastName(argv[3]);
+			return 1;
+
+		}
+	};
+	this->accountNumber = number;
+	X tmp;
+	stringstream res;
+	res << "select * from numbers where accountNumber = " << number;
+	int rc = db->execute(res.str(), tmp.getID, this);
+	if (rc == SQLITE_ABORT)
+	{
+		int err = rc;
+		res.str(std::string());
+		res << "select * from details where UserID = '" << id << "'";
+		err += db->execute(res.str(), tmp.getPrimaryInfo, this);
+		if (err != 8)
+		{
+			return 8;
+		}
+	}
+	else
+	{
+		return 1; //mark, 1 means that callback hasn't been called 
+	}
+	return 0;
+}
+
 int Person::insertIntoDb(DatabaseConnection* db)
 {
 	int err = 0;
@@ -214,7 +257,7 @@ int Person::insertIntoDb(DatabaseConnection* db)
 	result.str(std::string());
 
 	result << "insert into numbers values ";
-	result << "(" << getID() << ", '" << getAccountNumber() << "' ,'"<< 0 <<"' ,'"<<vault.getType() <<"')";
+	result << "(" << getID() << ", '" << getAccountNumber() << "' ,'"<< 10 <<"' ,'"<<vault.getType() <<"')";
 	err += db->execute(result.str());
 	result.str(std::string());
 

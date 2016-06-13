@@ -18,6 +18,7 @@ public:
 	Person();
 	~Person();
 	int getPersonFromDataBase(string,string, DatabaseConnection*);
+	int getPersonByNumber(unsigned long long number, DatabaseConnection* db);
 	string getFirstName();
 	string getSecondName();
 	string getLastName();

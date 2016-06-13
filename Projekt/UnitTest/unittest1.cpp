@@ -21,9 +21,12 @@ namespace UnitTest
 			Assert::AreEqual(base.dropTabAccounts(), SQLITE_OK, 0);
 			Assert::AreEqual(base.dropTabDetails(), SQLITE_OK, 0);
 			Assert::AreEqual(base.dropTabNumbers(), SQLITE_OK, 0);
+			Assert::AreEqual(base.dropTabNotify(), SQLITE_OK, L"sada");
 			Assert::AreEqual(base.createTabAccounts(), SQLITE_OK, 0);
 			Assert::AreEqual(base.createTabDetails(), SQLITE_OK, 0);
 			Assert::AreEqual(base.createTabNumbers(), SQLITE_OK, L"sada");
+			Assert::AreEqual(base.createTabNotify(), SQLITE_OK, L"sada");
+			
 
 			Person a;
 			a.setLogin("log");

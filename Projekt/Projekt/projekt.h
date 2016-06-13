@@ -48,6 +48,7 @@ public:
 	void setMainScreen();
 	void setInfoScreen();
 	void setPasswordChangeScreen();
+	void setMoneyExchangeScreen();
 private:
 	Ui::ProjektClass ui;
 	DatabaseConnection* db;

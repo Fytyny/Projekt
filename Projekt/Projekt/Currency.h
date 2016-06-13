@@ -12,11 +12,70 @@ public:
 	void setCash(double, string);
 	double getCash();
 	string getType();
+
 };
 
-struct PLN {
-	double cash;
-	double toUSD();
+struct PLN : Currency 
+{
+	double toUSD()
+	{
+		return this->getCash() / 3.9139556;
+	}
+	double toEUR()
+	{
+		return this->getCash() / 4.4161161;
+	}
+	double toPLN()
+	{
+		return this->getCash();
+	}
+};
+
+struct USD : Currency
+{
+	double toPLN()
+	{
+		return this->getCash() / 0.255496;
+	}
+	double toEUR()
+	{
+		return this->getCash() / 1.1283;
+	}
+	double toUSD()
+	{
+		return this->getCash();
+	}
+};
+
+struct EUR : Currency
+{
+	double toPLN()
+	{
+		return this->getCash() / 0.226443322;
+	}
+	double toUSD()
+	{
+		return this->getCash() / 0.886289108;
+	}
+	double toEUR()
+	{
+		return this->getCash();
+	}
 };
 
 
+template <class T> class piniondzek
+{
+public:
+	T* cash;
+	piniondzek(Currency * cash)
+	{
+		this->cash = cash;
+		//T.money = cash->getCash();
+	}
+	~piniondzek() 
+	{
+
+	}
+
+};

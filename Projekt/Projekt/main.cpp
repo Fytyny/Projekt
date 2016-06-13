@@ -29,13 +29,10 @@ int main(int argc, char *argv[])
 		qDebug() << "Can't open database";
 		exit(0);
 	}
-	qDebug() << base.dropTabAccounts();
-	qDebug() << base.dropTabDetails();
-	qDebug() << base.dropTabNumbers();
+
 	qDebug() << base.createTabAccounts();
 	qDebug() << base.createTabDetails();
 	qDebug() << base.createTabNumbers();
-	qDebug() << base.dropTabNotify();
 	qDebug() << base.createTabNotify();
 
 	QApplication a(argc, argv);

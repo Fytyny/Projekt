@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>394</height>
+    <width>581</width>
+    <height>401</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,6 +54,25 @@
            <property name="text">
             <string>LastName</string>
            </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox">
+           <item>
+            <property name="text">
+             <string>PLN</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>USD</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>EUR</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>
@@ -153,9 +172,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboBox</sender>
+   <signal>activated(QString)</signal>
+   <receiver>infoPage</receiver>
+   <slot>changeType()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>522</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>608</x>
+     <y>123</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>passwordChange()</slot>
   <slot>goBack()</slot>
+  <slot>changeType()</slot>
  </slots>
 </ui>

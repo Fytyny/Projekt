@@ -107,6 +107,15 @@
     <ClCompile Include="passwordchangescreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MoneyExchange.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MoneyExchange.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="MoneyExchange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="projekt.h">
@@ -148,6 +157,12 @@
     <CustomBuild Include="passwordchangescreen.hpp">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="MoneyExchange.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MoneyExchange.hpp">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_projekt.h">
@@ -181,6 +196,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_passwordchangescreen.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MoneyExchange.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

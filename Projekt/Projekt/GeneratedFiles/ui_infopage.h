@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -32,6 +33,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *firstName;
     QLabel *LastName;
+    QComboBox *comboBox;
     QLabel *SecondName;
     QLabel *label_2;
     QLabel *accNumber;
@@ -43,7 +45,7 @@ public:
     {
         if (infoPage->objectName().isEmpty())
             infoPage->setObjectName(QStringLiteral("infoPage"));
-        infoPage->resize(555, 394);
+        infoPage->resize(581, 401);
         verticalLayout_4 = new QVBoxLayout(infoPage);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -78,6 +80,11 @@ public:
         LastName->setFont(font1);
 
         horizontalLayout->addWidget(LastName);
+
+        comboBox = new QComboBox(infoPage);
+        comboBox->setObjectName(QStringLiteral("comboBox"));
+
+        horizontalLayout->addWidget(comboBox);
 
 
         verticalLayout->addLayout(horizontalLayout);
@@ -128,6 +135,7 @@ public:
         retranslateUi(infoPage);
         QObject::connect(pushButton_2, SIGNAL(clicked()), infoPage, SLOT(passwordChange()));
         QObject::connect(pushButton, SIGNAL(clicked()), infoPage, SLOT(goBack()));
+        QObject::connect(comboBox, SIGNAL(activated(QString)), infoPage, SLOT(changeType()));
 
         QMetaObject::connectSlotsByName(infoPage);
     } // setupUi
@@ -138,6 +146,12 @@ public:
         label->setText(QApplication::translate("infoPage", "Your data:", 0));
         firstName->setText(QApplication::translate("infoPage", "FirstName", 0));
         LastName->setText(QApplication::translate("infoPage", "LastName", 0));
+        comboBox->clear();
+        comboBox->insertItems(0, QStringList()
+         << QApplication::translate("infoPage", "PLN", 0)
+         << QApplication::translate("infoPage", "USD", 0)
+         << QApplication::translate("infoPage", "EUR", 0)
+        );
         SecondName->setText(QApplication::translate("infoPage", "SecondName", 0));
         label_2->setText(QApplication::translate("infoPage", "Your Account Number is:", 0));
         accNumber->setText(QApplication::translate("infoPage", "14214142141421", 0));

@@ -18,7 +18,7 @@ Login::~Login()
 void Login::send()
 {
 	QMessageBox notification;
-	Person* s = new Person();
+	Person * s = new Person;
 	if (!ui.login->text().isEmpty() && !ui.password->text().isEmpty()) {
 		if (s->getPersonFromDataBase(ui.login->text().toStdString(), ui.password->text().toStdString(), db) == 0)
 		{

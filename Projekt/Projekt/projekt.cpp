@@ -4,6 +4,7 @@
 #include "accountview.hpp"
 #include "passwordchangescreen.hpp"
 #include "infopage.hpp"
+#include "MoneyExchange.hpp"
 #include <QStackedWidget>
 #include <qcombobox.h>
 #include <qdebug.h>
@@ -44,7 +45,7 @@ void Projekt::setAccountViewScreen()
 
 void Projekt::setInfoScreen()
 {
-	pageController->setPage(new infoPage(this));
+	pageController->setPage(new infoPage(this, db));
 }
 void Projekt::deletePerson()
 {
@@ -58,4 +59,9 @@ Person* Projekt::getPerson()
 void Projekt::setPasswordChangeScreen()
 {
 	pageController->setPage(new PasswordChangeScreen(this,db));
+}
+
+void Projekt::setMoneyExchangeScreen()
+{
+	pageController->setPage(new MoneyExchange(this, db));
 }

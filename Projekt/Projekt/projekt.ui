@@ -10,6 +10,18 @@
     <height>413</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>612</width>
+    <height>413</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>612</width>
+    <height>413</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Projekt</string>
   </property>

@@ -37,6 +37,8 @@ public:
         if (ProjektClass->objectName().isEmpty())
             ProjektClass->setObjectName(QStringLiteral("ProjektClass"));
         ProjektClass->resize(612, 413);
+        ProjektClass->setMinimumSize(QSize(612, 413));
+        ProjektClass->setMaximumSize(QSize(612, 413));
         actionSdad = new QAction(ProjektClass);
         actionSdad->setObjectName(QStringLiteral("actionSdad"));
         actionAsfasf = new QAction(ProjektClass);

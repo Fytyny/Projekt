@@ -9,14 +9,16 @@ class infoPage : public QWidget {
 	Q_OBJECT
 
 public:
-	infoPage(Projekt * parent);
+	infoPage(Projekt * parent, DatabaseConnection* db);
 	~infoPage();
 
 public slots:
 	void passwordChange();
 	void goBack();
+	void changeType();
 
 private:
 	Ui::infoPage ui;
 	Projekt* parent;
+	DatabaseConnection* db;
 };
