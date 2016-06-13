@@ -136,7 +136,7 @@ void Person::generateAccountNumber(DatabaseConnection* db)
 	};
 	ACC tmp;
 	int nowy [26];
-	db->execute("select max(ID) from accounts", tmp.callback, &tmp);
+	db->execute("select max(accountNumber) from numbers", tmp.callback, &tmp);
 	this->accountNumber = tmp.accNum;
 	
 }
@@ -206,6 +206,9 @@ int Person::getPersonByNumber(unsigned long long number, DatabaseConnection* db)
 
 			Person* wsk = static_cast<Person*>(data);
 			wsk->setID(onlyFirst<int>(argv, 0));
+			Currency* s = wsk->getCurrency();
+			s->setCash(std::stod(static_cast<string>(argv[2])), static_cast<string>(argv[3]));
+
 			return 1;
 		}
 		static int getPrimaryInfo(void *data, int argc, char **argv, char **azColName)

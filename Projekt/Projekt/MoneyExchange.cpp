@@ -4,6 +4,7 @@
 #include "Currency.h"
 #include <qmessagebox.h>
 #include <sstream>
+#include <qdebug.h>
 
 
 using namespace std;
@@ -12,27 +13,24 @@ template <typename T>
 double toPLN(double cash)
 {
 	T retVal;
-	retVal.setCash(cash, NULL);
-	retVal.setCash(retVal.toPLN(), NULL);
-	return retVal.getCash();
+	retVal.setCash(cash, "");
+	return retVal.toPLN();
 }
 
 template <typename T>
 double toUSD(double cash)
 {
 	T retVal;
-	retVal.setCash(cash, NULL);
-	retVal.setCash(retVal.toUSD(), NULL);
-	return retVal.getCash();
+	retVal.setCash(cash, "");
+	return retVal.toUSD();
 }
 
 template <typename T>
 double toEUR(double cash)
 {
 	T retVal;
-	retVal.setCash(cash, NULL);
-	retVal.setCash(retVal.toEUR(), NULL);
-	return retVal.getCash();
+	retVal.setCash(cash, "");
+	return retVal.toEUR();
 }
 
 void showMessage(QString txt, QMessageBox::Icon icon)
@@ -57,7 +55,11 @@ void MoneyExchange::sendMoney()
 	Person s;
 	if (ui.accNum->text().toLongLong() < 1000000000000000 || ui.accNum->text().toLongLong() > 9999999999999999)
 	{
-		showMessage("Account number need to hava 16 numbers ", QMessageBox::Warning);
+		showMessage("Account number need to have 16 numbers ", QMessageBox::Warning);
+	}
+	else if (s.getID() == parent->getPerson()->getID())
+	{
+		showMessage("You cant send money to yourself! ", QMessageBox::Warning);
 	}
 	else if (ui.amountOfMoney->text().toDouble() > this->parent->getPerson()->getCurrency()->getCash())
 	{
@@ -67,8 +69,17 @@ void MoneyExchange::sendMoney()
 	{
 		showMessage("You cant send no money", QMessageBox::Warning);
 	}
+	else if (s.getPersonByNumber(ui.accNum->text().toLongLong(), db) != 0)
+	{
+		showMessage("There is no account number like that in db ", QMessageBox::Critical);
+	}
+	else if (s.getID() == parent->getPerson()->getID())
+	{
+		showMessage("You can't send money to yourself! ", QMessageBox::Warning);
+	}
 	else if (s.getPersonByNumber(ui.accNum->text().toLongLong(), db) == 0)
 	{
+		bool isOk;
 		double moneyToSend;
 		double moneyToReceive;
 		if (ui.comboBox->currentText().compare("PLN") == 0)
@@ -79,6 +90,7 @@ void MoneyExchange::sendMoney()
 		}
 		else if (ui.comboBox->currentText().compare("USD") == 0)
 		{
+	
 			moneyToSend = checkUSD(QString::fromStdString(parent->getPerson()->getCurrency()->getType()));
 			moneyToReceive = checkUSD(QString::fromStdString(s.getCurrency()->getType()));
 		}
@@ -92,16 +104,26 @@ void MoneyExchange::sendMoney()
 			showMessage("Critical error that shouln't ever occur! ", QMessageBox::Critical);
 			return;
 		}
-		int tc;
-		if (tc = send(moneyToSend, moneyToReceive, s) != 0)
+
+		if (moneyToSend <= this->parent->getPerson()->getCurrency()->getCash())
 		{
-			showMessage("There was problem with DB nr " + QString::number(tc), QMessageBox::Critical);
+			int tc;
+			if (tc = send(moneyToSend, moneyToReceive, s) != 0)
+			{
+				showMessage("There was problem with DB nr " + QString::number(tc), QMessageBox::Critical);
+			}
+			else
+			{
+				showMessage("Money sent successfully", QMessageBox::Information);
+			}
 		}
+		else
+		{
+			showMessage("You don't have that many ", QMessageBox::Warning);
+		}
+
 	}
-	else
-	{
-		showMessage("There is no account number like that in db ", QMessageBox::Critical);
-	}
+
 }
 
 double MoneyExchange::checkPLN(QString a)
@@ -109,18 +131,18 @@ double MoneyExchange::checkPLN(QString a)
 	double retVal;
 	if (a.compare(ui.comboBox->currentText()) != 0)
 	{
-		if (a.compare("USD"))
+		if (a.compare("USD") == 0)
 		{
-			retVal = toPLN<USD>(ui.amountOfMoney->text().toDouble());
+			retVal = toUSD<PLN>(ui.amountOfMoney->text().toDouble());
 		}
 		else
 		{
-			retVal = toPLN<EUR>(ui.amountOfMoney->text().toDouble());
+			retVal = toEUR<PLN>(ui.amountOfMoney->text().toDouble());
 		}
 	}
 	else
 	{
-		retVal = parent->getPerson()->getCurrency()->getCash();
+		retVal = ui.amountOfMoney->text().toDouble();
 	}
 	return retVal;
 }
@@ -130,18 +152,18 @@ double MoneyExchange::checkUSD(QString a)
 	double retVal;
 	if (a.compare(ui.comboBox->currentText()) != 0)
 	{
-		if (a.compare("EUR"))
+		if (a.compare("EUR") == 0)
 		{
-			retVal = toUSD<EUR>(ui.amountOfMoney->text().toDouble());
+			retVal = toEUR<USD>(ui.amountOfMoney->text().toDouble());
 		}
 		else
 		{
-			retVal = toUSD<PLN>(ui.amountOfMoney->text().toDouble());
+			retVal = toPLN<USD>(ui.amountOfMoney->text().toDouble());
 		}
 	}
 	else
 	{
-		retVal = parent->getPerson()->getCurrency()->getCash();
+		retVal = ui.amountOfMoney->text().toDouble();
 	}
 	return retVal;
 }
@@ -151,18 +173,18 @@ double MoneyExchange::checkEUR(QString a)
 	double retVal;
 	if (a.compare(ui.comboBox->currentText()) != 0)
 	{
-		if (a.compare("USD"))
+		if (a.compare("USD") == 0)
 		{
-			retVal = toEUR<USD>(ui.amountOfMoney->text().toDouble());
+			retVal = toUSD<EUR>(ui.amountOfMoney->text().toDouble());
 		}
 		else
 		{
-			retVal = toEUR<PLN>(ui.amountOfMoney->text().toDouble());
+			retVal = toPLN<EUR>(ui.amountOfMoney->text().toDouble());
 		}
 	}
 	else
 	{
-		retVal = parent->getPerson()->getCurrency()->getCash();
+		retVal = ui.amountOfMoney->text().toDouble();
 	}
 	return retVal;
 }
@@ -177,9 +199,13 @@ int MoneyExchange::send(double moneyS, double moneyR, Person receiver)
 	Currency* user = this->parent->getPerson()->getCurrency();
 	user->setCash(user->getCash() - moneyS, user->getType());
 
-	Currency* address = receiver.getCurrency();
-	address->setCash(address->getCash() + moneyR, address->getType());
+
 	
+	Currency* address = receiver.getCurrency();
+
+	address->setCash(address->getCash() + moneyR, address->getType());
+
+
 	stringstream query;
 	query << "update numbers set amountOfMoney = " << user->getCash() << " where userID = " << parent->getPerson()->getID();
 	int rc = 0;
@@ -200,6 +226,7 @@ int MoneyExchange::send(double moneyS, double moneyR, Person receiver)
 	query.str(std::string());
 	query << "insert into notify values ('" << receiver.getID() << "', '" << parent->getPerson()->getID() << "', '0' , '" << moneyR << "', '" << address->getType() << "' ,CURRENT_TIMESTAMP )";
 	rc = db->execute(query.str());
+
 	if (rc != 0) showMessage("4", QMessageBox::Critical);
 	return rc;
 }

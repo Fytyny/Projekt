@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <QMessageBox>
+#include <QDebug>
 #include <QTextBrowser>
 using namespace std;
 AccountView::AccountView(Projekt * parent, DatabaseConnection * db, Person * user) : QWidget(parent) 
