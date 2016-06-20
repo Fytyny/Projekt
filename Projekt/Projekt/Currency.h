@@ -64,18 +64,3 @@ struct EUR : Currency
 };
 
 
-template <class T> class piniondzek
-{
-public:
-	T* cash;
-	piniondzek(Currency * cash)
-	{
-		this->cash = cash;
-		//T.money = cash->getCash();
-	}
-	~piniondzek() 
-	{
-
-	}
-
-};

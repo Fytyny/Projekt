@@ -61,10 +61,6 @@ void MoneyExchange::sendMoney()
 	{
 		showMessage("You cant send money to yourself! ", QMessageBox::Warning);
 	}
-	else if (ui.amountOfMoney->text().toDouble() > this->parent->getPerson()->getCurrency()->getCash())
-	{
-		showMessage("You don't have that many ", QMessageBox::Warning);
-	}
 	else if (ui.amountOfMoney->text().toDouble() <= 0)
 	{
 		showMessage("You cant send no money", QMessageBox::Warning);
@@ -80,6 +76,7 @@ void MoneyExchange::sendMoney()
 	else if (s.getPersonByNumber(ui.accNum->text().toLongLong(), db) == 0)
 	{
 		bool isOk;
+		double moneyToSendInDefaultValue = ui.amountOfMoney->text().toDouble();
 		double moneyToSend;
 		double moneyToReceive;
 		if (ui.comboBox->currentText().compare("PLN") == 0)
